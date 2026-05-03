@@ -28,11 +28,9 @@ export function ResourcePanel({ resources, onStat, onTest }) {
 
   return (
     <div className="resource-panel">
-      <div className="resource-panel-title">
+      <div className="resource-panel-title" onClick={() => setCollapsed(c => !c)}>
         <span>📊 Your Resources</span>
-        <button className="resource-collapse-btn" onClick={() => setCollapsed(c => !c)}>
-          {collapsed ? '▲' : '▼'}
-        </button>
+        <span className="resource-collapse-btn">{collapsed ? '▲' : '▼'}</span>
       </div>
 
       {!collapsed && <>
