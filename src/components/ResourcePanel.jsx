@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './ResourcePanel.css'
 
 const STATS = [
@@ -23,56 +24,65 @@ export const WRITTEN_TESTS = [
 ]
 
 export function ResourcePanel({ resources, onStat, onTest }) {
+  const [collapsed, setCollapsed] = useState(false)
+
   return (
     <div className="resource-panel">
-      <div className="resource-panel-title">📊 Your Resources</div>
+      <div className="resource-panel-title">
+        <span>📊 Your Resources</span>
+        <button className="resource-collapse-btn" onClick={() => setCollapsed(c => !c)}>
+          {collapsed ? '▲' : '▼'}
+        </button>
+      </div>
 
-      <div className="resource-section">
-        {STATS.map(({ key, icon, label, max }) => (
-          <div key={key} className="resource-stat-row">
-            <span className="resource-icon">{icon}</span>
-            <span className="resource-label">{label}</span>
-            <div className="resource-controls">
-              <button
-                className="resource-btn"
-                onClick={() => onStat(key, resources[key] - 1)}
-              >−</button>
-              <input
-                className="resource-input"
-                type="number"
-                min={0}
-                max={max}
-                value={resources[key]}
-                onChange={e => onStat(key, Number(e.target.value))}
-              />
-              <button
-                className="resource-btn"
-                onClick={() => onStat(key, resources[key] + 1)}
-              >+</button>
+      {!collapsed && <>
+        <div className="resource-section">
+          {STATS.map(({ key, icon, label, max }) => (
+            <div key={key} className="resource-stat-row">
+              <span className="resource-icon">{icon}</span>
+              <span className="resource-label">{label}</span>
+              <div className="resource-controls">
+                <button
+                  className="resource-btn"
+                  onClick={() => onStat(key, resources[key] - 1)}
+                >−</button>
+                <input
+                  className="resource-input"
+                  type="number"
+                  min={0}
+                  max={max}
+                  value={resources[key]}
+                  onChange={e => onStat(key, Number(e.target.value))}
+                />
+                <button
+                  className="resource-btn"
+                  onClick={() => onStat(key, resources[key] + 1)}
+                >+</button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="resource-divider" />
+        <div className="resource-divider" />
 
-      <div className="resource-section">
-        <div className="resource-section-label">📝 Written Tests Passed</div>
-        {WRITTEN_TESTS.map(({ code, name }) => {
-          const checked = resources.writtenTests.has(code)
-          return (
-            <label key={code} className={`resource-test-row ${checked ? 'is-checked' : ''}`}>
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={() => onTest(code)}
-              />
-              <span className="resource-test-code">{code}</span>
-              <span className="resource-test-name">{name}</span>
-            </label>
-          )
-        })}
-      </div>
+        <div className="resource-section">
+          <div className="resource-section-label">📝 Written Tests Passed</div>
+          {WRITTEN_TESTS.map(({ code, name }) => {
+            const checked = resources.writtenTests.has(code)
+            return (
+              <label key={code} className={`resource-test-row ${checked ? 'is-checked' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => onTest(code)}
+                />
+                <span className="resource-test-code">{code}</span>
+                <span className="resource-test-name">{name}</span>
+              </label>
+            )
+          })}
+        </div>
+      </>}
     </div>
   )
 }
