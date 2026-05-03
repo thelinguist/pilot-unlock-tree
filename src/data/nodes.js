@@ -144,6 +144,7 @@ export const initialNodes = [
       reqs: ['Private Pilot cert', '50 hrs XC PIC', '40 hrs instrument'],
       perks: ['IFR flight', 'Clouds & low visibility ops'],
       cost: { hours: 50, writtenTests: ['IRA'] },
+      note: '50 hours must be XC PIC'
     },
     position: { x: 0, y: 0 },
   },

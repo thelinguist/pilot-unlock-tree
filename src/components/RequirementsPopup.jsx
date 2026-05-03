@@ -80,6 +80,7 @@ export function RequirementsPopup({ node, prereqNodes, anyOf, resources, onClose
                   ))}
                 </div>
               )}
+              {node?.data?.note && <p className="popup-sublabel">{node.data.note}</p>}
             </section>
           )}
         </div>
